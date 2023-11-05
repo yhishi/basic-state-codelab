@@ -62,14 +62,22 @@ fun WaterCounter(modifier: Modifier = Modifier) {
             }
             Text("You've had ${count} glasses.")
         }
-        Button(
-            onClick = {
-                count++
-            },
-            modifier = Modifier.padding(top = 8.dp),
-            enabled = count < 10,
-        ) {
-            Text("Add one")
+        Row(Modifier.padding(top = 8.dp)) {
+            Button(
+                onClick = {
+                    count++
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                enabled = count < 10,
+            ) {
+                Text("Add one")
+            }
+            Button(
+                onClick = { count = 0 },
+                modifier = Modifier.padding(top = 8.dp)
+            ) {
+                Text("Clear water count")
+            }
         }
     }
 }
