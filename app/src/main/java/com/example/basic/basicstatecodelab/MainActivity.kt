@@ -51,8 +51,8 @@ fun WellnessScreen(modifier: Modifier = Modifier) {
 //    WaterCounter(modifier)
     Column(modifier = modifier) {
         StatefulCounter(modifier)
-        val list = remember { getWellnessTasks().toMutableStateList() }
-        WellnessTasksList(list = list, onCloseTask = { task -> list.remove(task) })
+//        val list = remember { getWellnessTasks().toMutableStateList() }
+//        WellnessTasksList(list = list, onCloseTask = { task -> list.remove(task) })
     }
 }
 
@@ -110,8 +110,6 @@ fun StatefulCounter(modifier: Modifier = Modifier) {
 }
 
 data class WellnessTask(val id: Int, val label: String)
-
-private fun getWellnessTasks() = List(30) { i -> WellnessTask(i, "Task # $i") }
 
 @Composable
 fun WellnessTasksList(
