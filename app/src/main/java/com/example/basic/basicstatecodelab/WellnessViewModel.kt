@@ -1,5 +1,9 @@
 package com.example.basic.basicstatecodelab
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 
@@ -12,7 +16,7 @@ class WellnessViewModel() : ViewModel() {
     fun remove(task: WellnessTask) {
         _tasks.remove(task)
     }
-    
+
     fun changeTaskChecked(item: WellnessTask, checked: Boolean) =
         tasks.find { it.id == item.id }?.let { task ->
             task.checked = checked
@@ -21,4 +25,10 @@ class WellnessViewModel() : ViewModel() {
     private fun getWellnessTasks() = List(30) { i -> WellnessTask(i, "Task # $i") }
 }
 
-data class WellnessTask(val id: Int, val label: String, var checked: Boolean = false)
+class WellnessTask(
+    val id: Int,
+    val label: String,
+    initialChecked: Boolean = false
+) {
+    var checked by mutableStateOf(initialChecked)
+}
