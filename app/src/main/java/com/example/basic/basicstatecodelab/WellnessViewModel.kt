@@ -3,7 +3,7 @@ package com.example.basic.basicstatecodelab
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 
-class WellnessViewModel() : ViewModel(){
+class WellnessViewModel() : ViewModel() {
 
     private val _tasks = getWellnessTasks().toMutableStateList()
     val tasks: List<WellnessTask>
@@ -12,6 +12,13 @@ class WellnessViewModel() : ViewModel(){
     fun remove(task: WellnessTask) {
         _tasks.remove(task)
     }
+    
+    fun changeTaskChecked(item: WellnessTask, checked: Boolean) =
+        tasks.find { it.id == item.id }?.let { task ->
+            task.checked = checked
+        }
 
     private fun getWellnessTasks() = List(30) { i -> WellnessTask(i, "Task # $i") }
 }
+
+data class WellnessTask(val id: Int, val label: String, var checked: Boolean = false)
