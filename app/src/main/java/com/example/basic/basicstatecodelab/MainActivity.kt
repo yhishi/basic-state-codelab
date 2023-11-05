@@ -25,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -50,7 +51,8 @@ fun WellnessScreen(modifier: Modifier = Modifier) {
 //    WaterCounter(modifier)
     Column(modifier = modifier) {
         StatefulCounter(modifier)
-        WellnessTasksList()
+        val list = remember { getWellnessTasks().toMutableStateList() }
+        WellnessTasksList(list = list, onCloseTask = { task -> list.remove(task) })
     }
 }
 
@@ -63,9 +65,9 @@ fun WaterCounter(modifier: Modifier = Modifier) {
         if (count > 0) {
             var showTask by rememberSaveable { mutableStateOf(true) }
             if (showTask) {
-                WellnessTaskItem(
-                    taskName = "Have you taken your 15 minute walk today?"
-                )
+//                WellnessTaskItem(
+//                    taskName = "Have you taken your 15 minute walk today?"
+//                )
             }
             Text("You've had ${count} glasses.")
         }
@@ -114,26 +116,27 @@ private fun getWellnessTasks() = List(30) { i -> WellnessTask(i, "Task # $i") }
 @Composable
 fun WellnessTasksList(
     modifier: Modifier = Modifier,
-    list: List<WellnessTask> = remember { getWellnessTasks() }
+    list: List<WellnessTask>,
+    onCloseTask: (WellnessTask) -> Unit,
 ) {
     LazyColumn(
         modifier = modifier
     ) {
         items(list) { task ->
-            WellnessTaskItem(taskName = task.label)
+            WellnessTaskItem(taskName = task.label, onClose = { onCloseTask(task) })
         }
     }
 }
 
 @Composable
-fun WellnessTaskItem(taskName: String, modifier: Modifier = Modifier) {
+fun WellnessTaskItem(taskName: String, modifier: Modifier = Modifier, onClose: () -> Unit) {
     var checkedState by rememberSaveable { mutableStateOf(false) }
 
     WellnessTaskItem(
         taskName = taskName,
         checked = checkedState,
         onCheckedChange = { newValue -> checkedState = newValue },
-        onClose = {}, // we will implement this later!
+        onClose = { onClose() },
         modifier = modifier,
     )
 }
