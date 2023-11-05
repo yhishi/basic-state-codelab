@@ -56,7 +56,7 @@ fun WaterCounter(modifier: Modifier = Modifier) {
             var showTask by remember { mutableStateOf(true) }
             if (showTask) {
                 WellnessTaskItem(
-                    onClose = { },
+                    onClose = { showTask = false },
                     taskName = "Have you taken your 15 minute walk today?"
                 )
             }
@@ -84,7 +84,9 @@ fun WellnessTaskItem(
         modifier = modifier, verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.weight(1f).padding(start = 16.dp),
+            modifier = Modifier
+                .weight(1f)
+                .padding(start = 16.dp),
             text = taskName
         )
         IconButton(onClick = onClose) {
