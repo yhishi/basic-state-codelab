@@ -20,6 +20,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,10 +51,10 @@ fun WellnessScreen(modifier: Modifier = Modifier) {
 fun WaterCounter(modifier: Modifier = Modifier) {
     Column(modifier = modifier.padding(16.dp)) {
         // Changes to count are now tracked by Compose
-        var count by remember { mutableStateOf(0) }
+        var count by rememberSaveable { mutableStateOf(0) }
 
         if (count > 0) {
-            var showTask by remember { mutableStateOf(true) }
+            var showTask by rememberSaveable { mutableStateOf(true) }
             if (showTask) {
                 WellnessTaskItem(
                     onClose = { showTask = false },
